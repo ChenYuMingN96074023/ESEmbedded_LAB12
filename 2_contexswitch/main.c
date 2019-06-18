@@ -14,8 +14,8 @@ void setup_systick(uint32_t ticks);
 
 void init_task(unsigned int task_id, uint32_t *task_addr, uint32_t *psp_init)
 {
-	SET_BIT(psp_init-4, 24); //??????	  //xPSR (bit 24, T bit, has to be 1 in Thumb state)
-	REG(psp_init -2) = (uint32_t)task_addr; //Return Address is being initialized to the task entry
+	*(psp_init-1) = UINT32_1 << 24; //??????	  //xPSR (bit 24, T bit, has to be 1 in Thumb state)
+	*(psp_init-2) = (uint32_t)task_addr; //Return Address is being initialized to the task entry
 	psp_array[task_id] = psp_init-16;//??????	//initialize psp_array (stack frame: 8 + r4 ~ r11: 8)
 }
 
